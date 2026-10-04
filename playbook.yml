@@ -1,0 +1,25 @@
+---
+
+- name: static website hosting
+  hosts: hosts
+  become: true
+
+  tasks:
+   - name: update the package list
+     apt:
+      update_cache: true
+
+   - name: install nginx server
+     apt:
+      name: nginx
+      state: present
+
+   - name: copy file to nginx
+     copy:
+      src: index.html
+      dest: /var/www/html/index.html
+
+   - name: restart nginx
+     service:
+      name: nginx
+      state: restarted
